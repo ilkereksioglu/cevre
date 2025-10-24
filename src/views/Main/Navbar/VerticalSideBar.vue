@@ -1,5 +1,5 @@
 <template>
-  <header class="main-nav">
+  <header class="main-nav" :class="{'close_icon': $store.state.showSidebarMenu}">
     <div class="sidebar-user text-center">
       <a class="setting-primary" href="javascript:void(0)"><i data-feather="settings"></i></a><img class="img-90 rounded-circle" src="https://cdn-img.zerozero.pt/img/logos/equipas/210707_imgbank_1712309277.png" alt="">
       <div class="badge-bottom"><span class="badge badge-primary">New</span></div><a href="#">

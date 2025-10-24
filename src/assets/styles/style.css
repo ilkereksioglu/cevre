@@ -5052,7 +5052,7 @@ table tbody .border-bottom-warning td {
   .page-wrapper.compact-wrapper .page-body-wrapper header.main-nav {
     position: fixed;
     border-bottom: none;
-    top: 83px;
+    top: 80px;
     z-index: 8;
     height: 100%;
     line-height: inherit;

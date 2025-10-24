@@ -9,10 +9,13 @@
     <PackageJsonDependenciesFortawesomeFontawesomeSvgCore Condition="$(PackageJsonDependenciesFortawesomeFontawesomeSvgCore) == ''">^7.0.1</PackageJsonDependenciesFortawesomeFontawesomeSvgCore>
     <PackageJsonDependenciesPopperjsCore Condition="$(PackageJsonDependenciesPopperjsCore) == ''">^2.11.8</PackageJsonDependenciesPopperjsCore>
     <PackageJsonDependenciesApexcharts Condition="$(PackageJsonDependenciesApexcharts) == ''">^5.3.4</PackageJsonDependenciesApexcharts>
+    <PackageJsonDependenciesAxios Condition="$(PackageJsonDependenciesAxios) == ''">^1.12.2</PackageJsonDependenciesAxios>
     <PackageJsonDependenciesBootstrap Condition="$(PackageJsonDependenciesBootstrap) == ''">^5.3.8</PackageJsonDependenciesBootstrap>
     <PackageJsonDependenciesFontawesome Condition="$(PackageJsonDependenciesFontawesome) == ''">^5.6.3</PackageJsonDependenciesFontawesome>
+    <PackageJsonDependenciesJwtDecode Condition="$(PackageJsonDependenciesJwtDecode) == ''">^4.0.0</PackageJsonDependenciesJwtDecode>
     <PackageJsonDependenciesVeeValidate Condition="$(PackageJsonDependenciesVeeValidate) == ''">^4.15.1</PackageJsonDependenciesVeeValidate>
     <PackageJsonDependenciesVue Condition="$(PackageJsonDependenciesVue) == ''">^3.2.13</PackageJsonDependenciesVue>
+    <PackageJsonDependenciesVueLoadingOverlay Condition="$(PackageJsonDependenciesVueLoadingOverlay) == ''">6.0</PackageJsonDependenciesVueLoadingOverlay>
     <PackageJsonDependenciesVueRouter Condition="$(PackageJsonDependenciesVueRouter) == ''">^4.0.3</PackageJsonDependenciesVueRouter>
     <PackageJsonDependenciesVue3Apexcharts Condition="$(PackageJsonDependenciesVue3Apexcharts) == ''">^1.8.0</PackageJsonDependenciesVue3Apexcharts>
     <PackageJsonDependenciesVue3PerfectScrollbar Condition="$(PackageJsonDependenciesVue3PerfectScrollbar) == ''">^2.0.0</PackageJsonDependenciesVue3PerfectScrollbar>

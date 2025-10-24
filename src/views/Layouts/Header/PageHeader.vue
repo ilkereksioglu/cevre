@@ -1,10 +1,10 @@
 .<template>
-  <div class="page-main-header">
+  <div class="page-main-header" :class="{'close_icon': $store.state.showSidebarMenu}">
         <div class="main-header-right row m-0">
             <div class="main-header-left">
             <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="../../../assets/images/logo/logo.png" alt=""></a></div>
             <div class="dark-logo-wrapper"><a href="index.html"><img class="img-fluid" src="../../../assets/images/logo/dark-logo.png" alt=""></a></div>
-            <div class="toggle-sidebar"><i class="fa fa-heart" data-feather="align-center" id="sidebar-toggle"></i></div>
+            <div class="toggle-sidebar" @click="toggleSidebarMenu"><i class="fa fa-navicon" data-feather="align-center" id="sidebar-toggle"></i></div>
             </div>
             <div class="left-menu-header col">
             <ul>
@@ -110,13 +110,17 @@
                 </li>
             </ul>
             </div>
-            <div class="d-lg-none mobile-toggle pull-right w-auto"><i class="fa fa-heart"></i></div>
+            <div class="d-lg-none mobile-toggle pull-right w-auto"><i class="fa fa-ellipsis-h"></i></div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    methods: {
+        toggleSidebarMenu() {
+            this.$store.commit('toggleSidebarMenu');
+        }
+    }
 }
 </script>

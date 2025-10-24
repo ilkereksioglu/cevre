@@ -1,7 +1,8 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   devServer: {
-    port: 3000
+    port: process.env.PORT,
+    proxy: process.env.BASE_URL,
   },
   transpileDependencies: true
 })
