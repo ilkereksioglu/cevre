@@ -43,7 +43,6 @@ axiosInstance.interceptors.response.use(
         setTimeout(() => {
               window.location.reload();
           }, 100);
-        
       }
     }
     return Promise.reject(err.response);

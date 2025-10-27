@@ -1,6 +1,6 @@
 <template>
   <loading
-    :active="false"
+    :active="$store.state.showLoading"
     :can-cancel="false"
     :is-full-page="fullPage"
     :color="'#ffffff'"

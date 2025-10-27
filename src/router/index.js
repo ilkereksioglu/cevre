@@ -25,7 +25,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/musteri/:id',
+    path: '/musteri/:id(\\d+)',
     name: 'musteriDetail',
     component: MusteriDetail
   },

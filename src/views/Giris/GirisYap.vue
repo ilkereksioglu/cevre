@@ -18,15 +18,26 @@
             <h6>Hos geldiniz!</h6>
             <div class="form-group">
               <label>Kullanici Adi</label>
-              <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-                <input class="form-control" type="text" required="" placeholder="Kullanici adi" v-model="username">
+              <div class="input-group">
+                <span class="input-group-text"><i class="icon-email"></i></span>
+                <input @blur="v$.user.username.$touch" class="form-control" type="text" required="" placeholder="Kullanici adi" v-model="user.username">
+              </div>
+              <div class="position-absolute text-danger">
+                <small v-if="v$.user.username.$error && v$.user.username.$dirty">
+                  {{ v$.user.username.$errors[0].$message }}
+                </small>
               </div>
             </div>
             <div class="form-group">
               <label>Sifre</label>
               <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-                <input class="form-control" type="password" name="login[password]" required="" placeholder="*********" v-model="password">
+                <input @blur="v$.user.password.$touch" class="form-control" type="password" name="login[password]" required="" placeholder="*********" v-model="user.password">
                 <div class="show-hide"><span class="show">                         </span></div>
+              </div>
+              <div class="position-absolute text-danger">
+                <small v-if="v$.user.password.$error && v$.user.password.$dirty">
+                  {{ v$.user.password.$errors[0].$message }}
+                </small>
               </div>
             </div>
             <div class="form-group">
@@ -36,7 +47,7 @@
               </div><a class="link" href="forget-password.html">Forgot password?</a>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary btn-block" type="submit" @click.prevent="girisYap">Sign in</button>
+              <button :class="{ disabled: v$.$invalid }" class="btn btn-primary btn-block" type="submit" @click.prevent="girisYap">Sign in</button>
             </div>
           </form>
         </div>
@@ -47,17 +58,35 @@
 </template>
 
 <script>
+import { useVuelidate } from '@vuelidate/core'
+import { required, email, helpers } from '@vuelidate/validators'
+
 export default {
+  setup () {
+    return { v$: useVuelidate() }
+  },
+  validations() {
+    return {
+      user: {
+        username: { required: helpers.withMessage('Lutfen kullanici adinizi giriniz', required) },
+        password: { required: helpers.withMessage('Lutfen sifrenizi adini giriniz', required) },
+      },
+    }
+  },
   data() {
     return {
-      email: '',
-      username: '',
-      password: '',
+      user: {
+        username: '',
+        password: '',
+      }
     }
   },
   methods: {
-    girisYap() {
-      this.$store.dispatch('auth/girisYap', {kullaniciAdi: this.username, password: this.password}).then(
+    async girisYap() {
+      let result = await this.v$.$validate()
+      if(!result)
+        return;
+      this.$store.dispatch('auth/girisYap', this.user).then(
         (response) => {
           this.$router.push('/');
         },
