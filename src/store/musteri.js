@@ -10,11 +10,12 @@ export default {
     },
     actions: {
         async musteriGetir({commit}, id){
-            commit('showLoadingOverlay', null, { root: true });
+            //commit('showLoadingOverlay', null, { root: true });
             return api.get('/musteri/' + id).then(
                 (response) => {
                     commit('musteriGetirSuccess');
                     commit('hideLoadingOverlay', null, { root: true });
+                    console.log("isItClosed?")
                     return Promise.resolve(response.data);
                 },
                 (error) => {
@@ -25,10 +26,9 @@ export default {
                 }
             );
         },
-        async musteriEkleGuncelle({commit}, id, musteri){
+        async musteriEkleGuncelle({commit}, payload){
             commit('showLoadingOverlay', null, { root: true });
-            console.log(musteri);
-            return api.post('/musteri/' + id, musteri).then(
+            return api.post('/musteri/' + payload.id, payload.musteri).then(
                 (response) => {
                     commit('musteriEkleGuncelleSuccess');
                     commit('hideLoadingOverlay', null, { root: true });
@@ -37,7 +37,8 @@ export default {
                 (error) => {
                     commit('musteriEkleGuncelleFail');
                     commit('hideLoadingOverlay', null, { root: true });
-                    return Promise.reject(error.message);
+                    console.log(error);
+                    return Promise.reject(error);
                 }
             );
         },

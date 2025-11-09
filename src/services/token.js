@@ -17,18 +17,18 @@ class TokenService {
     if(!token)
       return false;
     let decoded = jwtDecode(token);
-    let now = Date.now().valueOf() / 1000;
-    if(decoded.expires > now)
-      return true;
-    return false;
+    let now = Date.now().valueOf();
+    if(decoded.exp * 1000 > now)
+      return false;
+    return true;
   }
 
   checkTokenExpired(token){
     let decoded = jwtDecode(token);
-    let now = Date.now().valueOf() / 1000;
-    if(decoded.expires > now)
-      return true;
-    return false;
+    let now = Date.now().valueOf();;
+    if(decoded.exp * 1000 > now)
+      return false;
+    return true;
   }
 
   getKullanici() {
@@ -43,25 +43,48 @@ class TokenService {
     localStorage.removeItem('kullanici');
   }
 
-  async isAuthenticated() {
+  async getAccessTokenIfAuthenticated() {
     let token = this.getLocalAccessToken();
     if(token){
       if(this.checkTokenExpired(token)){
         try {
-          console.log(process.env.BASE_URL)
-          var response = await axios.post("/tokengetir", { refreshToken: this.getLocalRefreshToken() });
+          var response = await axios.post(process.env.VUE_APP_BASE_URL + "/tokengetir", { refreshToken: this.getLocalRefreshToken() });
           if (response && response.data && response.data.data){
             this.setKullanici(response.data.data);
             return Promise.resolve(this.getLocalAccessToken());
           }
         } catch (_error) {
+            this.removeKullanici();
             return Promise.reject(_error);
         }    
       }else{
         return Promise.resolve(token);
       }
     }
-    return Promise.resolve("");
+    this.removeKullanici();
+    return Promise.reject("");
+  }
+
+  async isAuthenticated() {
+    let token = this.getLocalAccessToken();
+    if(token){
+      if(this.checkTokenExpired(token)){
+        try {
+          var response = await axios.post(process.env.VUE_APP_BASE_URL + "/tokengetir", { refreshToken: this.getLocalRefreshToken() });
+          if (response && response.data && response.data.data){
+            this.setKullanici(response.data.data);
+            return Promise.resolve(true);
+          }
+        } catch (_error) {
+            this.removeKullanici();
+            return Promise.resolve(false);
+        }    
+      }else{
+        return Promise.resolve(true);
+      }
+    }
+    this.removeKullanici();
+    return Promise.resolve(false);
   }
 }
 

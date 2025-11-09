@@ -3,9 +3,8 @@ import store from "../store/index.js";
 import tokenService from  "./token.js";
 
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:44351",
+  baseURL: process.env.VUE_APP_BASE_URL,
   headers: {
-  'Content-Type': 'application/json'
   },
 });
 
@@ -13,10 +12,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(async (config) => {
   store.commit('showLoadingOverlay');
   try{
-    var token = await tokenService.isAuthenticated();
-    if(token)
-      config.headers["Authorization"] = "Bearer " +  token;
+    //error thrown if not authenticated to redirect to girisyap
+    var token = await tokenService.getAccessTokenIfAuthenticated();
+    config.headers["Authorization"] = "Bearer " +  token;
   } catch (error) {
+      window.location.href = '/girisyap';
       return Promise.reject(error);
   } 
 
@@ -35,16 +35,15 @@ axiosInstance.interceptors.response.use(
   async (err) => {
     const originalConfig = err.config;
 
-    if (originalConfig.url !== '/girisyap' && err.response) {
+    if (originalConfig.url !== '/girisyap' && err.response && err.response.status === 401) {
       // Access Token was expired
-      if (err.response.status === 401) {
-        store.commit('showLoadingOverlay');
-        originalConfig.Authorization = '';
-        setTimeout(() => {
-              window.location.reload();
-          }, 100);
-      }
+      originalConfig.Authorization = '';
+      setTimeout(() => {
+            window.location.href = '/girisyap';
+        }, 100);
     }
+
+    store.commit('hideLoadingOverlay');
     return Promise.reject(err.response);
   }
 );

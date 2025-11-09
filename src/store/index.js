@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 import auth from './auth.js'
+import musteri from './musteri.js';
 export default createStore({
-  modules: { auth },
+  modules: { auth, musteri },
   state: {
     showSidebarMenu: false,
     showLoading: false

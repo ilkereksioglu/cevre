@@ -20,11 +20,11 @@
               <label>Kullanici Adi</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="icon-email"></i></span>
-                <input @blur="v$.user.username.$touch" class="form-control" type="text" required="" placeholder="Kullanici adi" v-model="user.username">
+                <input @blur="v$.user.kullaniciAdi.$touch" class="form-control" type="text" required="" placeholder="Kullanici adi" v-model="user.kullaniciAdi">
               </div>
               <div class="position-absolute text-danger">
-                <small v-if="v$.user.username.$error && v$.user.username.$dirty">
-                  {{ v$.user.username.$errors[0].$message }}
+                <small v-if="v$.user.kullaniciAdi.$error && v$.user.kullaniciAdi.$dirty">
+                  {{ v$.user.kullaniciAdi.$errors[0].$message }}
                 </small>
               </div>
             </div>
@@ -68,7 +68,7 @@ export default {
   validations() {
     return {
       user: {
-        username: { required: helpers.withMessage('Lutfen kullanici adinizi giriniz', required) },
+        kullaniciAdi: { required: helpers.withMessage('Lutfen kullanici adinizi giriniz', required) },
         password: { required: helpers.withMessage('Lutfen sifrenizi adini giriniz', required) },
       },
     }
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       user: {
-        username: '',
+        kullaniciAdi: '',
         password: '',
       }
     }

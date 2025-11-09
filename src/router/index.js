@@ -40,17 +40,19 @@ router.beforeEach(async (to, from, next) => {
   var isAuthenticated = true;
   try{
     var isExpired = tokenService.checkAccessTokenExpiration();
-    console.log(isExpired);
+    console.log("Expired: ", isExpired);
     if(isExpired)
       store.commit('showLoadingOverlay');
-    isAuthenticated = (await tokenService.isAuthenticated()) ? true : false;
-    console.log(isAuthenticated);
+    isAuthenticated = await tokenService.isAuthenticated();
+    console.log(isAuthenticated, "opps");
+    store.commit('hideLoadingOverlay');
   } catch(error){}
   store.commit('hideLoadingOverlay');
   if (
     to.fullPath.startsWith('/girisyap')
   ) {
     if (isAuthenticated) {
+      console.log("dont");
       next('/');
     }else{
       next();

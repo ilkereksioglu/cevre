@@ -27,8 +27,7 @@ export default {
         },
         girisYap({commit}, kullanici){
             commit('showLoadingOverlay', null, { root: true });
-            console.log(process.env.BASE_URL);
-            return axios.post("https://localhost:44351/girisyap", kullanici).then(
+            return axios.post(process.env.VUE_APP_BASE_URL + "/girisyap", kullanici).then(
                 (response) => {
                     commit('girisYapSuccess', kullanici);
                     tokenService.setKullanici(response.data);
